@@ -48,7 +48,8 @@ SELECT distinct Num as ConsecutiveNums
 FROM Logs
 WHERE (Id + 1, Num) in (select * from Logs) and (Id + 2, Num) in (select * from Logs)
 
--- uses lead  with cte as (
+-- uses lead  
+with cte as (
     select num,
     lead(num,1) over() num1,
     lead(num,2) over() num2
