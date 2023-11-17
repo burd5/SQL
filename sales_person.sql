@@ -109,12 +109,16 @@ WHERE s.name NOT IN
       LEFT JOIN company c ON c.com_id = o.com_id
       WHERE c.name = 'Red')
 
+-- 
+
 SELECT s.name FROM SalesPerson s 
 	WHERE s.sales_id NOT IN (
 		SELECT o.sales_id FROM Orders o LEFT JOIN Company c 
 			ON c.com_id=o.com_id 
 		WHERE c.name="RED"
 	);
+
+-- 
 
 SELECT name FROM SalesPerson 
 WHERE sales_id NOT IN(
