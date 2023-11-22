@@ -119,4 +119,14 @@ where  3 > (select count(distinct (e2.Salary))
         where e2.Salary > e1.Salary
             and e1.DepartmentId = e2.DepartmentId)
 
-            
+-- retried problem, solution similar to original
+
+with rankings as (
+    select *, 
+    dense_rank() over(partition by departmentId order by salary desc) as ranked
+    from employee
+)
+
+select d.name as Department, r.name as Employee, r.salary as Salary
+from rankings r left join department d on r.departmentId = d.id
+where ranked <= 3
