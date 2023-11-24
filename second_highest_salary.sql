@@ -21,3 +21,4 @@ SELECT
     LIMIT 1 OFFSET 1) 
 AS SecondHighestSalary;
 
+-- 
