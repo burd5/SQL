@@ -61,3 +61,4 @@ SELECT sell_date,
 FROM activities
 GROUP BY sell_date
 
+---
