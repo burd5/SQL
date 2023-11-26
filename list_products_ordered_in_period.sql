@@ -84,3 +84,11 @@ from products p join orders o using(product_id)
 where o.order_date BETWEEN '2020-02-01' and '2020-02-29'
 group by product_id
 having sum(unit) >= 100
+
+--
+
+SELECT p.product_name AS product_name, sum(o.unit) AS unit FROM Products p
+JOIN Orders o USING (product_id)
+WHERE YEAR(o.order_date)='2020' AND MONTH(o.order_date)='02'
+GROUP BY p.product_id
+HAVING SUM(o.unit)>=100
