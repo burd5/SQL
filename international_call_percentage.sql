@@ -52,6 +52,6 @@ SELECT
   / (SELECT COUNT(*) FROM phone_calls),1) AS international_call_pct
 FROM international_calls;
 
-
+------------------------------------------------------------
 
 
