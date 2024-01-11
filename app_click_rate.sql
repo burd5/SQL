@@ -52,3 +52,21 @@ FROM events
 WHERE timestamp >= '2022-01-01' 
   AND timestamp < '2023-01-01'
 GROUP BY app_id;
+
+
+-- 2nd attempt
+
+with clicks_impressions as (
+select 
+  app_id,
+  SUM(CASE WHEN event_type = 'click' then 1 else 0 end) as clicks,
+  SUM(CASE WHEN event_type = 'impression' then 1 else 0 end) as impressions
+from events
+where extract(year from timestamp) = 2022
+group by app_id
+)
+
+select
+  app_id,
+  ROUND(clicks * 1.0/impressions * 100.0, 2) as ctr 
+from clicks_impressions
