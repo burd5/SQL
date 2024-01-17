@@ -89,3 +89,17 @@ ROUND(IFNULL(AVG(c.action = 'confirmed'), 0),2) as confirmation_rate
 FROM signups AS s
 LEFT JOIN confirmations c ON s.user_id = c.user_id
 GROUP BY s.user_id;
+
+-- 2nd time solution
+
+with confirm_status as (
+    select user_id,
+        SUM(CASE WHEN action = 'timeout' THEN 1 ELSE 0 END) as timeout,
+        SUM(CASE WHEN action = 'confirmed' THEN 1 ELSE 0 END) as confirmed
+    from signups s left join confirmations con using(user_id)
+    group by user_id
+)
+
+select cs.user_id, ROUND(confirmed/count(cs.user_id), 2) as confirmation_rate
+from confirm_status cs left join confirmations con using(user_id)
+group by cs.user_id
