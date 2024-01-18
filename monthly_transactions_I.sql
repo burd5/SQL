@@ -92,3 +92,5 @@ select to_char(trans_date,'YYYY-MM') as month,
        coalesce(sum(amount) filter (where state='approved'),0)  as approved_total_amount
 from transactions
 group by to_char(trans_date,'YYYY-MM'),country
+
+--
