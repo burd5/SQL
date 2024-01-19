@@ -81,3 +81,14 @@ select to_char(trans_date, 'YYYY-MM') as month,
        SUM(CASE WHEN state = 'approved' THEN amount ELSE 0 END) as approved_total_amount
 from transactions
 group by 1,2
+
+-- Postgres Using Filter
+
+select to_char(trans_date,'YYYY-MM') as month,
+       country,
+       count(*) as trans_count, 
+       count(*) filter (where state='approved') as approved_count,
+       sum(amount) as trans_total_amount,
+       coalesce(sum(amount) filter (where state='approved'),0)  as approved_total_amount
+from transactions
+group by to_char(trans_date,'YYYY-MM'),country
