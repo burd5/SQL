@@ -58,3 +58,9 @@ WHERE referee_id <> 2 OR referee_id IS NULL
 SELECT name
 FROM Customer
 WHERE COALESCE(referee_id,0) <> 2
+
+-- 2nd attempt
+
+select name
+from customer
+where referee_id <> 2 or referee_id IS NULL
