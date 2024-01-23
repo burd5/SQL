@@ -67,3 +67,10 @@ union
 select area,population,name
 from world
 where population>=25000000
+
+- 2nd Attempt
+
+
+select name, population, area
+from world
+where area >= 3_000_000 or population >= 25_000_000
