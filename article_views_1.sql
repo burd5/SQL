@@ -56,3 +56,9 @@ FROM views
 WHERE author_id = viewer_id
 ORDER BY id;
 
+-- 2nd Attempt
+
+select distinct author_id as id
+from views
+where author_id = viewer_id
+order by id asc
