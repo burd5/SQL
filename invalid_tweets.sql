@@ -47,3 +47,11 @@ FROM tweets
 WHERE LENGTH(content) > 15
 
 -- Could use char_length as well
+
+
+-- 2nd Attempt
+
+select tweet_id
+from tweets
+where length(content) > 15
+
