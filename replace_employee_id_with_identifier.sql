@@ -79,4 +79,10 @@ SELECT eu.unique_id AS unique_id, e.name
 FROM Employees e
 LEFT JOIN EmployeeUNI eu USING(id)
 
+-- 2nd Attempt
+
+select unique_id, name
+from employees left join employeeuni using(id)
+
+
 
