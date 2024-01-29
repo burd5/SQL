@@ -56,6 +56,7 @@ from delivery where (customer_id, order_date) IN
 from delivery
 group by customer_id)
 
+-----
 
 select round(sum(if(order_date = customer_pref_delivery_date, 1, 0)) / count(*) * 100, 2) as immediate_percentage from Delivery
 where (customer_id, order_date) in
@@ -63,3 +64,25 @@ where (customer_id, order_date) in
     Select customer_id, min(order_date) from Delivery group by customer_id
 )
 
+-- 2nd attempt
+
+with first_orders as (
+    select customer_id, min(order_date) as first_order
+    from delivery
+    group by customer_id
+)
+
+select ROUND(SUM(CASE WHEN first_order = customer_pref_delivery_date THEN 1 ELSE 0 END)/
+        CAST(count(distinct customer_id) as numeric) * 100, 2) as immediate_percentage
+from first_orders
+join delivery using(customer_id)
+
+-- 2nd attempt subquery
+
+select ROUND(SUM(CASE WHEN order_date = customer_pref_delivery_date THEN 1 ELSE 0 END)/
+        CAST(count(distinct customer_id) as numeric) * 100, 2) as immediate_percentage
+from delivery
+where (customer_id, order_date) in
+    (select customer_id, min(order_date)
+    from delivery
+    group by customer_id)
