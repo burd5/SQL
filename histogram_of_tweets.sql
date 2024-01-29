@@ -20,3 +20,20 @@ with tweet_counts as (
 SELECT num_of_tweets, COUNT(num_of_tweets) as users_num
 FROM tweet_counts
 GROUP BY 1
+
+--- 2nd Attempt
+
+with tweet_counts_by_user as (
+  select
+      user_id,
+      count(user_id) as num_tweets
+  from tweets
+  where DATE_PART('year', tweet_date) = 2022
+  group by user_id
+)
+
+select
+    num_tweets as tweet_bucket,
+    count(num_tweets) as users_num
+from tweet_counts_by_user
+group by num_tweets
