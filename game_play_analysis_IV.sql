@@ -49,7 +49,26 @@ FROM
 (SELECT player_id, MIN(event_date) AS first_login FROM Activity GROUP BY player_id) t1 LEFT JOIN Activity t2
 ON t1.player_id = t2.player_id AND t1.first_login = t2.event_date - 1
 
+---
+
 SELECT ROUND(COUNT(DISTINCT player_id) / (SELECT COUNT(DISTINCT player_id) FROM Activity),2) as fraction 
 FROM Activity
 WHERE (player_id, DATE_SUB(event_date, INTERVAL 1 DAY)) 
 IN (SELECT player_id, MIN(event_date) as first_login FROM Activity GROUP BY player_id)
+
+--- 2nd Attempt
+
+with first_logged_date as (
+    select player_id, min(event_date) as first_date
+    from activity
+    group by player_id
+),
+
+logged_second_day as (
+    select count(*) as back_to_back_days
+    from activity
+    where (player_id, event_date) in (select player_id, first_date + interval '1' day
+                                      from first_logged_date))
+
+select ROUND(back_to_back_days::numeric/(select count(distinct player_id) from activity), 2) as fraction
+from logged_second_day
