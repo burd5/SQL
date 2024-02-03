@@ -23,6 +23,8 @@ EXCEPT
 SELECT page_id
 FROM page_likes;
 
+-- 
+
 SELECT page_id
 FROM pages
 WHERE page_id NOT IN (
@@ -31,6 +33,8 @@ WHERE page_id NOT IN (
   WHERE page_id IS NOT NULL
 );
 
+-- 
+
 SELECT page_id
 FROM pages
 WHERE NOT EXISTS (
@@ -38,4 +42,12 @@ WHERE NOT EXISTS (
   FROM page_likes AS likes
   WHERE likes.page_id = pages.page_id
 ;)
+
+-- 2nd attempt
+
+select p.page_id
+from pages p 
+left join page_likes pl 
+using(page_id)
+where pl.page_id is null
 
