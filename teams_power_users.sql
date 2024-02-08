@@ -31,4 +31,14 @@ GROUP BY sender_id
 ORDER BY count_messages DESC
 LIMIT 2; 
 
+-- 2nd attempt
+
+select 
+  sender_id, 
+  count(sender_id) as message_count
+from messages
+where to_char(sent_date, 'MM-YYYY') = '08-2022'
+group by sender_id
+order by 2 desc 
+limit 2
 
