@@ -22,3 +22,13 @@ GROUP BY
   EXTRACT(MONTH FROM submit_date), 
   product_id
 ORDER BY mth, product_id;
+
+-- 2nd attempt
+
+select 
+  extract(month from submit_date) as mth,
+  product_id as product,
+  ROUND(AVG(stars), 2) as avg_stars
+from reviews
+group by 2, 1
+order by 1, 2
