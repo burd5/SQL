@@ -21,3 +21,10 @@ SELECT
   COUNT(*) FILTER (WHERE device_type = 'laptop') AS laptop_views,
   COUNT(*) FILTER (WHERE device_type IN ('tablet', 'phone'))  AS mobile_views 
 FROM viewership;
+
+-- 2nd attempt solution
+
+select 
+  SUM(CASE WHEN device_type in ('phone', 'tablet') then 1 else 0 end) as mobile_views,
+  SUM(CASE WHEN device_type = 'laptop' then 1 else 0 end) as laptop_views
+from viewership
