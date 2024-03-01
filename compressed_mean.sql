@@ -31,3 +31,12 @@ SELECT
     /SUM(order_occurrences)
   ,1) AS mean
 FROM items_per_order;+
+
+
+-- 2nd Attempt
+
+-- total items/total orders, round to one decimal __ as mean
+
+select 
+  ROUND( SUM(item_count::numeric * order_occurrences)/SUM(order_occurrences), 1) as mean
+from items_per_order
