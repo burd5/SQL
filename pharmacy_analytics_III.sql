@@ -35,3 +35,18 @@ SELECT
   ('$' || ROUND(sales / 1000000) || ' million') AS sales_mil 
 FROM drug_sales 
 ORDER BY sales DESC, manufacturer;
+
+
+-- 2nd attempt
+
+-- total drug sales for each manufacturer
+-- round answer to nearest million
+-- total_sales desc, manufacturer asc 
+-- $ __ million --> concat
+
+SELECT
+  manufacturer,
+  '$' || ROUND( SUM(total_sales)/1000000 ) || ' million' as sale
+FROM pharmacy_sales
+GROUP BY manufacturer
+ORDER BY SUM(total_sales) desc, manufacturer;
