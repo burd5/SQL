@@ -33,3 +33,14 @@ FROM pharmacy_sales
 WHERE cogs > total_sales
 GROUP BY manufacturer
 ORDER BY total_loss DESC;
+
+-- 2nd attempt
+
+select
+  manufacturer,
+  count(distinct drug) as drug_count,
+  ABS(SUM(total_sales - cogs)) as total_loss
+from pharmacy_sales
+where cogs > total_sales
+group by manufacturer
+order by total_loss desc
