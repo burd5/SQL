@@ -35,7 +35,7 @@ from total_time t join open_time ot using(age_bucket) join send_time using(age_b
 
 
 -- Provided Solutions
-
+SELECT
   age.age_bucket, 
   ROUND(100.0 * 
     SUM(activities.time_spent) FILTER (WHERE activities.activity_type = 'send')/

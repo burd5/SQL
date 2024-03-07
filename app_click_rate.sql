@@ -70,3 +70,5 @@ select
   app_id,
   ROUND(clicks * 1.0/impressions * 100.0, 2) as ctr 
 from clicks_impressions
+
+--
