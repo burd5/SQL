@@ -50,3 +50,15 @@ FROM trans_num
 WHERE row_num = 3;
 
 --
+
+-- 2nd attempt
+
+with transaction_ranks as (
+  select *,
+  rank() over(partition by user_id order by transaction_date asc) as ranking
+  from transactions
+)
+
+select user_id, spend, transaction_date
+from transaction_ranks
+where ranking = 3;
