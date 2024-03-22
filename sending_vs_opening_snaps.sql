@@ -70,3 +70,21 @@ SELECT
   ROUND(100.0 * send_timespent / total_timespent, 2) AS send_perc, 
   ROUND(100.0 * open_timespent / total_timespent, 2) AS open_perc 
 FROM snaps_statistics;
+
+-- 2nd attempt
+
+-- find total time by age group using SUM()/FILTER()/group by
+with total_time_by_age as (
+  select age_bucket,
+         SUM(time_spent) FILTER(where activity_type = 'open') as total_open_time,
+         SUM(time_spent) FILTER(where activity_type = 'send') as total_send_time
+  from activities a join age_breakdown ab 
+       on a.user_id = ab.user_id
+  group by age_bucket
+)
+
+-- find percentage of time spent on each based on total time spent
+select age_bucket,
+       ROUND( total_open_time/(total_open_time + total_send_time) * 100, 2) as open_perc,
+       ROUND( total_send_time/(total_open_time + total_send_time) * 100, 2) as send_perc
+from total_time_by_age
