@@ -38,3 +38,20 @@ FROM (
 WHERE ranking <= 2 
 ORDER BY category, ranking;
 
+
+
+-- 2nd Attempt
+
+with product_rankings as (
+  select category,
+         product,
+         sum(spend) as total_spend,
+         row_number() over(partition by category order by sum(spend) desc) as ranking
+  from product_spend
+  where EXTRACT('year' from transaction_date) = 2022
+  group by category, product
+)
+
+select category, product, total_spend
+from product_rankings
+where ranking <= 2
