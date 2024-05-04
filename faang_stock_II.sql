@@ -16,3 +16,4 @@ select ticker,
       ROUND( (close - previous_month_price) / previous_month_price * 100, 2) as intermth_change_pct
 from lag_prices
 
+--
