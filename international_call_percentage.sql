@@ -55,3 +55,12 @@ FROM international_calls;
 ------------------------------------------------------------
 
 
+with country_ids as (
+select caller.country_id as caller_country,
+       receiver.country_id as receiver_country
+from phone_calls LEFT JOIN phone_info caller on phone_calls.caller_id = caller.caller_id
+                 LEFT JOIN phone_info receiver on phone_calls.receiver_id = receiver.caller_id
+)
+
+select ROUND( SUM(CASE WHEN caller_country != receiver_country THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 1) as international_calls_pct
+from country_ids
