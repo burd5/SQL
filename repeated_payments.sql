@@ -15,4 +15,4 @@ select count(*) as payment_count
 from minutes_diff
 where minute_difference <= 10 
 
---
+----
